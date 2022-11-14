@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="app/src/main/res/drawable/background.xml" value="0.277" />
+        <entry key="app/src/main/res/drawable/bottom_stroke.xml" value="0.1835" />
+        <entry key="app/src/main/res/drawable/date_cjeck.xml" value="0.277" />
+        <entry key="app/src/main/res/drawable/edit_background.xml" value="0.1835" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.277" />
+        <entry key="app/src/main/res/drawable/switch_thump.xml" value="0.1835" />
+        <entry key="app/src/main/res/drawable/switch_thump_on.xml" value="0.1835" />
+        <entry key="app/src/main/res/drawable/switch_thump_selector.xml" value="0.1835" />
+        <entry key="app/src/main/res/drawable/switch_track_off.xml" value="0.1835" />
+        <entry key="app/src/main/res/drawable/switch_track_on.xml" value="0.1835" />
+        <entry key="app/src/main/res/drawable/switch_track_selector.xml" value="0.1835" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.45" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/check_list.xml" value="0.40260416666666665" />
+        <entry key="app/src/main/res/layout/date_check.xml" value="0.40260416666666665" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
