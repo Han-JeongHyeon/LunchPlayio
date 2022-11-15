@@ -1,19 +1,19 @@
 package com.example.flow.Adapter
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.flow.Data.CheckList
+import com.example.flow.Data.GetTableData
 
-class DiffUtil : DiffUtil.ItemCallback<CheckList>() {
+class DiffUtil : DiffUtil.ItemCallback<GetTableData>() {
     override fun areItemsTheSame(
-        oldItem: CheckList,
-        newItem: CheckList
+        oldItem: GetTableData,
+        newItem: GetTableData
     ): Boolean {
-        return oldItem.data.id == newItem.data.id
+        return oldItem.id == newItem.id
     }
 
     override fun areContentsTheSame(
-        oldItem: CheckList,
-        newItem: CheckList
+        oldItem: GetTableData,
+        newItem: GetTableData
     ): Boolean {
         return oldItem == newItem
     }

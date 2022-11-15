@@ -30,6 +30,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.loginBtn.setOnClickListener {
+//            appViewModel.getTableDate()
             val loginInfo = LoginData(
                 "${binding.idEd.text}",
                 "${binding.passwordEd.text}"

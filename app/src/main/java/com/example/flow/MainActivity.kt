@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.flow.Adapter.Adapter
 import com.example.flow.Data.CheckList
 import com.example.flow.Data.Data
+import com.example.flow.Data.GetTableData
 import com.example.flow.Module.RetrofitObject
 import com.example.flow.databinding.ActivityMainBinding
 import kotlinx.coroutines.CoroutineScope
@@ -42,9 +43,11 @@ class MainActivity : AppCompatActivity() {
 
         dateAdapter = Adapter()
 
-        appViewModel.getWeekDate()
+        appViewModel.getTableDate()
 
-        appViewModel.getLunchChecked(id, userId, baseContext)
+//        appViewModel.getWeekDate()
+//
+//        appViewModel.getLunchChecked(id, userId, baseContext)
 
         setAdapter()
         setObserver()
@@ -55,7 +58,7 @@ class MainActivity : AppCompatActivity() {
 
         dateAdapter = Adapter().apply {
             setOnCheckedChangeListener(object : Adapter.OnCheckedChangeListener {
-                override fun onItemCheck(v: View, item: CheckList) {
+                override fun onItemCheck(v: View, item: GetTableData) {
 
                 }
             })
@@ -69,11 +72,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setObserver(){
-//        lifecycleScope.launchWhenStarted {
-//            appViewModel.lunchList.collectLatest {
-//                dateAdapter!!.submitList(it)
-//            }
-//        }
+        lifecycleScope.launchWhenStarted {
+            appViewModel.lunchList.collectLatest {
+                dateAdapter!!.submitList(it)
+            }
+        }
 
     }
 

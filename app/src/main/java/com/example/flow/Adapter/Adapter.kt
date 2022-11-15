@@ -12,19 +12,20 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.flow.Data.CheckList
+import com.example.flow.Data.GetTableData
 import com.example.flow.R
 import com.example.flow.databinding.CheckListBinding
 
 class Adapter :
-    ListAdapter<CheckList, Adapter.ContactViewHolder>(DiffUtil()) {
+    ListAdapter<GetTableData, Adapter.ContactViewHolder>(DiffUtil()) {
 
     inner class ContactViewHolder(private val binding: CheckListBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         @SuppressLint("SetTextI18n")
-        fun bind(checkList: CheckList) {
-//            binding.dateText.text = checkList.date
-//            binding.checkSwitch.isChecked = checkList.check
+        fun bind(getTableData: GetTableData) {
+            binding.dateText.text = getTableData.date
+//            binding.checkSwitch.isChecked = getTableData.check
         }
 
     }
@@ -44,7 +45,7 @@ class Adapter :
     }
 
     interface OnCheckedChangeListener {
-        fun onItemCheck(v: View, item: CheckList)
+        fun onItemCheck(v: View, item: GetTableData)
     }
 
     private var listener : OnCheckedChangeListener? = null
