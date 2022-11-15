@@ -23,8 +23,8 @@ class Adapter :
 
         @SuppressLint("SetTextI18n")
         fun bind(checkList: CheckList) {
-            binding.dateText.text = checkList.date
-            binding.checkSwitch.isChecked = checkList.check
+//            binding.dateText.text = checkList.date
+//            binding.checkSwitch.isChecked = checkList.check
         }
 
     }

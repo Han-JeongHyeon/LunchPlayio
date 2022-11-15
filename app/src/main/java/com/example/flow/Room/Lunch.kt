@@ -5,6 +5,8 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Lunch (
-    @PrimaryKey val date: String,
-    val checked: Boolean
+    @PrimaryKey val d_id: String,
+    val id: String,
+    val is_checked: Boolean,
+    val user_id: String
 )

@@ -8,7 +8,7 @@ class DiffUtil : DiffUtil.ItemCallback<CheckList>() {
         oldItem: CheckList,
         newItem: CheckList
     ): Boolean {
-        return oldItem.date == newItem.date
+        return oldItem.data.id == newItem.data.id
     }
 
     override fun areContentsTheSame(

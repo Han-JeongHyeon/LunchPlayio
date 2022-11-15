@@ -10,9 +10,14 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.flow.Adapter.Adapter
 import com.example.flow.Data.CheckList
+import com.example.flow.Data.Data
+import com.example.flow.Module.RetrofitObject
 import com.example.flow.databinding.ActivityMainBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.observeOn
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -33,10 +38,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val id = intent.getStringExtra("id")
+        val userId = intent.getStringExtra("user_id")
 
         dateAdapter = Adapter()
 
         appViewModel.getWeekDate()
+
+        appViewModel.getLunchChecked(id, userId, baseContext)
 
         setAdapter()
         setObserver()
@@ -61,11 +69,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setObserver(){
-        lifecycleScope.launchWhenStarted {
-            appViewModel.lunchList.collectLatest {
-                dateAdapter!!.submitList(it)
-            }
-        }
+//        lifecycleScope.launchWhenStarted {
+//            appViewModel.lunchList.collectLatest {
+//                dateAdapter!!.submitList(it)
+//            }
+//        }
 
     }
 
