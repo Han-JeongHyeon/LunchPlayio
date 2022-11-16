@@ -39,15 +39,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val id = intent.getStringExtra("id")
-        val userId = intent.getStringExtra("user_id")
+        val userName = intent.getStringExtra("userName")
+
+        binding.userName.text = userName
 
         dateAdapter = Adapter()
 
-        appViewModel.getTableDate()
-
-//        appViewModel.getWeekDate()
-//
-//        appViewModel.getLunchChecked(id, userId, baseContext)
+        appViewModel.getTableDate("$id")
 
         setAdapter()
         setObserver()
@@ -58,8 +56,8 @@ class MainActivity : AppCompatActivity() {
 
         dateAdapter = Adapter().apply {
             setOnCheckedChangeListener(object : Adapter.OnCheckedChangeListener {
-                override fun onItemCheck(v: View, item: GetTableData) {
-
+                override fun onItemCheck(v: View, item: GetTableData, isChecked: Boolean) {
+                    appViewModel.getLunchChecked(item, isChecked)
                 }
             })
         }
@@ -73,6 +71,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setObserver(){
         lifecycleScope.launchWhenStarted {
+            binding.recyclerView.visibility = View.VISIBLE
             appViewModel.lunchList.collectLatest {
                 dateAdapter!!.submitList(it)
             }

@@ -24,8 +24,7 @@ interface Api {
 //    @Headers("Cookie:")
     @Headers("Content-Type: application/json")
     @POST("api/getTableData")
-    suspend fun getTableData(
-    ): List<GetTableData>
+    suspend fun getTableData(): List<GetTableData>
 
 }
 

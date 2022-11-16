@@ -3,6 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/android tack/LunchPlayio/app/src/main/res/drawable/bottom_stroke.xml" value="0.1875" />
+        <entry key="..\:/android tack/LunchPlayio/app/src/main/res/drawable/deadline.xml" value="0.1875" />
+        <entry key="..\:/android tack/LunchPlayio/app/src/main/res/layout/activity_login.xml" value="0.1778115501519757" />
+        <entry key="..\:/android tack/LunchPlayio/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/android tack/LunchPlayio/app/src/main/res/layout/check_list.xml" value="0.5" />
         <entry key="app/src/main/res/drawable/background.xml" value="0.277" />
         <entry key="app/src/main/res/drawable/bottom_stroke.xml" value="0.1835" />
         <entry key="app/src/main/res/drawable/date_cjeck.xml" value="0.277" />

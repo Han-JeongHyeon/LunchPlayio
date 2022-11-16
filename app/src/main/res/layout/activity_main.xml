@@ -17,7 +17,7 @@
         android:background="@color/white">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/userName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="이름"
@@ -35,13 +35,13 @@
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#F4F4F4"
+            android:background="#FAFAFA"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView"
+            app:layout_constraintTop_toBottomOf="@+id/userName"
             app:layout_constraintVertical_bias="0.069">
 
             <TextView
@@ -51,6 +51,15 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="Date"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Order Count"
                 android:textColor="@color/black" />
 
             <TextView

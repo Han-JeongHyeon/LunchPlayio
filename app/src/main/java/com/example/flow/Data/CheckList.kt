@@ -7,6 +7,6 @@ data class CheckList(
 data class Data(
     val id: String, //
     val user_id: String, //
-    val d_id: String, //
+    val d_id: String?, //
     val is_checked: Int //0 or 1
 )

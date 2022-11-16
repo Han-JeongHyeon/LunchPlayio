@@ -8,11 +8,13 @@ import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.example.flow.Data.LoginData
 import com.example.flow.databinding.ActivityLoginBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import retrofit2.Retrofit
@@ -30,13 +32,26 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.loginBtn.setOnClickListener {
-//            appViewModel.getTableDate()
+            if (binding.idEd.text.isEmpty() || binding.passwordEd.text.isEmpty()) {
+                return@setOnClickListener
+            }
             val loginInfo = LoginData(
                 "${binding.idEd.text}",
                 "${binding.passwordEd.text}"
             )
 
             appViewModel.login(loginInfo, baseContext)
+        }
+
+        lifecycleScope.launch(Dispatchers.Default) {
+            while (true) {
+                withContext(Dispatchers.Main) {
+                    binding.loginBtn.setBackgroundResource(
+                        if (binding.idEd.text.isEmpty() || binding.passwordEd.text.isEmpty()) R.color.gray else R.color.blue
+                    )
+                }
+
+            }
         }
 
     }

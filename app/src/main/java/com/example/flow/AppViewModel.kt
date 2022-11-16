@@ -18,13 +18,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import retrofit2.HttpException
 import java.lang.Exception
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.collections.ArrayList
 
 class AppViewModel(private val retrofit: RetrofitObject) : ViewModel() {
 
-    private var _lunchList = MutableStateFlow(listOf(GetTableData("",0,"","",0)))
+    private var _lunchList = MutableStateFlow(listOf(GetTableData("", "", "", "", "", "", "")))
     var lunchList = _lunchList.asStateFlow()
 
     fun login(loginInfo: LoginData, context: Context) {
@@ -35,12 +32,11 @@ class AppViewModel(private val retrofit: RetrofitObject) : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             var errorText = ""
             try {
-                val id = retrofit.getRetrofitService().login(loginInfo).map { it.id }.toString()
+                val id = retrofit.getRetrofitService("").login(loginInfo).map { it.id }[0]
                 intent.putExtra("id", id)
-                intent.putExtra("user_id", loginInfo.id)
+                intent.putExtra("userName", loginInfo.id)
                 context.startActivity(intent)
             } catch (e: HttpException) {
-//                Log.e("ExceptionError", "${e.code()}")
                 when (e.code()) {
                     500 -> errorText = "아이디, 비밀번호가 일치하지 않습니다."
                     521 -> errorText = "서버 오류."
@@ -53,25 +49,32 @@ class AppViewModel(private val retrofit: RetrofitObject) : ViewModel() {
 
     }
 
-    fun getLunchChecked(id: String?, userId: String?, context: Context){
-        CoroutineScope(Dispatchers.IO).launch {
+    fun getLunchChecked(item: GetTableData, isChecked: Boolean) {
+        Log.d("TAG", "${item.id}, ${item.user_id}, ${item.d_id}, ${if(isChecked) 1 else 0}")
+        viewModelScope.launch(Dispatchers.IO) {
             try {
-//                retrofit.getRetrofitService().lunchList()
-//                RetrofitObject(context).getRetrofitService().lunchList("")
+                retrofit.getRetrofitService("").lunchList(
+                    CheckList(
+                        Data(
+                            item.id,
+                            item.user_id,
+                            item.d_id,
+                            if (isChecked) 1 else 0
+                        )
+                    )
+                )
             } catch (e: Exception) {
                 Log.d("TAG", "$e")
             }
         }
     }
 
-    fun getTableDate() {
+    fun getTableDate(id: String) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val lunch = retrofit.getRetrofitService().getTableData()
-                lunch.map { it.is_availiable }
-                Log.d("TAG", "$lunch")
+                val lunch = retrofit.getRetrofitService(id).getTableData()
+                lunch.map { it.user_id = id }
                 _lunchList.emit(lunch)
-//                Log.d("TAG", "${retrofit.getRetrofitService().getTableData("token=14")}")
             } catch (e: HttpException) {
                 Log.d("TAG", "$e")
             }
