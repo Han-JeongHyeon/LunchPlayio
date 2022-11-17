@@ -10,11 +10,12 @@ import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.io.File
 import java.net.CookieManager
 
 
-class AddCookieInterceptor() : Interceptor {
+class AddCookieInterceptor : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val requestBuilder = chain.request().newBuilder()
@@ -42,7 +43,6 @@ class RetrofitObject(private var context: Context) {
         val interceptorBody = HttpLoggingInterceptor()
         interceptorBody.setLevel(HttpLoggingInterceptor.Level.BODY)
 
-
         val cache = Cache(File(context.cacheDir,"HTTP_Cache"),10 * 1024 * 1024L)
 
         val client = OkHttpClient.Builder()
@@ -54,6 +54,7 @@ class RetrofitObject(private var context: Context) {
 
         return Retrofit.Builder()
             .baseUrl("https://lunch.playio.kr/")
+            .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()

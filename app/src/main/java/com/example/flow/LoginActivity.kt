@@ -50,7 +50,6 @@ class LoginActivity : AppCompatActivity() {
                         if (binding.idEd.text.isEmpty() || binding.passwordEd.text.isEmpty()) R.color.gray else R.color.blue
                     )
                 }
-
             }
         }
 

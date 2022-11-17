@@ -3,6 +3,7 @@ package com.example.flow
 import com.example.flow.Data.CheckList
 import com.example.flow.Data.GetTableData
 import com.example.flow.Data.LoginData
+import okhttp3.Call
 import okhttp3.Cookie
 import okhttp3.RequestBody
 import retrofit2.http.*
@@ -19,9 +20,8 @@ interface Api {
     @POST("api/subscribe")
     suspend fun lunchList(
         @Body body: CheckList
-    ): List<CheckList>
+    ): String
 
-//    @Headers("Cookie:")
     @Headers("Content-Type: application/json")
     @POST("api/getTableData")
     suspend fun getTableData(): List<GetTableData>

@@ -6,6 +6,7 @@ import android.os.SystemClock
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import android.widget.CheckBox
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -90,10 +91,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
-    override fun onBackPressed() {
-
-    }
 
     private fun setObserver(){
         lifecycleScope.launchWhenStarted {

@@ -14,17 +14,22 @@ import com.example.flow.Data.GetTableData
 import com.example.flow.Data.LoginData
 import com.example.flow.Module.RetrofitObject
 import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import retrofit2.HttpException
+import retrofit2.http.HTTP
 import java.lang.Exception
 
-class AppViewModel(private val retrofit: RetrofitObject) : ViewModel() {
+class AppViewModel(retrofit: RetrofitObject) : ViewModel() {
 
-    private var _lunchList = MutableStateFlow(listOf(GetTableData("", "", "", "", "", "", "")))
-    var lunchList = _lunchList.asStateFlow()
+    //    private var _lunchList = MutableStateFlow(listOf(GetTableData("", "", "", "", "", "", "")))
+    private var _lunchList = MutableSharedFlow<List<GetTableData>>(replay = 0, extraBufferCapacity = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
+    var lunchList = _lunchList.asSharedFlow()
 
-    val retrofitService = retrofit.getRetrofitService()
+    private val retrofitService = retrofit.getRetrofitService()
 
     fun login(loginInfo: LoginData, context: Context) {
         val intent = Intent(context, MainActivity::class.java)
@@ -64,8 +69,8 @@ class AppViewModel(private val retrofit: RetrofitObject) : ViewModel() {
                         )
                     )
                 )
-            } catch (e: Exception) {
-                Log.d("TAG", "$e")
+            } catch (e: HttpException) {
+                Log.d("Http ", "$e")
             }
             getTableDate(item.user_id)
         }
@@ -78,7 +83,7 @@ class AppViewModel(private val retrofit: RetrofitObject) : ViewModel() {
                 lunch.map { it.user_id = id }
                 _lunchList.emit(lunch)
             } catch (e: HttpException) {
-                Log.d("TAG", "$e")
+                Log.d("Http ", "$e")
             }
         }
     }
