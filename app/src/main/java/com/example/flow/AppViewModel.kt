@@ -24,6 +24,8 @@ class AppViewModel(private val retrofit: RetrofitObject) : ViewModel() {
     private var _lunchList = MutableStateFlow(listOf(GetTableData("", "", "", "", "", "", "")))
     var lunchList = _lunchList.asStateFlow()
 
+    val retrofitService = retrofit.getRetrofitService()
+
     fun login(loginInfo: LoginData, context: Context) {
         val intent = Intent(context, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -32,7 +34,7 @@ class AppViewModel(private val retrofit: RetrofitObject) : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             var errorText = ""
             try {
-                val id = retrofit.getRetrofitService("").login(loginInfo).map { it.id }[0]
+                val id = retrofitService.login(loginInfo).map { it.id }[0]
                 intent.putExtra("id", id)
                 intent.putExtra("userName", loginInfo.id)
                 context.startActivity(intent)
@@ -50,10 +52,9 @@ class AppViewModel(private val retrofit: RetrofitObject) : ViewModel() {
     }
 
     fun getLunchChecked(item: GetTableData, isChecked: Boolean) {
-        Log.d("TAG", "${item.id}, ${item.user_id}, ${item.d_id}, ${if(isChecked) 1 else 0}")
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                retrofit.getRetrofitService("").lunchList(
+                retrofitService.lunchList(
                     CheckList(
                         Data(
                             item.id,
@@ -66,13 +67,14 @@ class AppViewModel(private val retrofit: RetrofitObject) : ViewModel() {
             } catch (e: Exception) {
                 Log.d("TAG", "$e")
             }
+            getTableDate(item.user_id)
         }
     }
 
     fun getTableDate(id: String) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val lunch = retrofit.getRetrofitService(id).getTableData()
+                val lunch = retrofitService.getTableData()
                 lunch.map { it.user_id = id }
                 _lunchList.emit(lunch)
             } catch (e: HttpException) {

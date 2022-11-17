@@ -2,6 +2,7 @@ package com.example.flow
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.SystemClock
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
@@ -33,6 +34,10 @@ class MainActivity : AppCompatActivity() {
 
     private val appViewModel: AppViewModel by viewModel()
 
+    var waitTime = 0L
+    var clickCheck = 1
+    var checked = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -57,7 +62,12 @@ class MainActivity : AppCompatActivity() {
         dateAdapter = Adapter().apply {
             setOnCheckedChangeListener(object : Adapter.OnCheckedChangeListener {
                 override fun onItemCheck(v: View, item: GetTableData, isChecked: Boolean) {
-                    appViewModel.getLunchChecked(item, isChecked)
+                    waitTime = SystemClock.elapsedRealtime()
+                    checked = isChecked
+                    if (clickCheck == 1) {
+                        clickCheck = 0
+                        clickCheck(item)
+                    }
                 }
             })
         }
@@ -66,6 +76,22 @@ class MainActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(context)
             adapter = dateAdapter
         }
+
+    }
+
+    fun clickCheck(item: GetTableData) =
+        lifecycleScope.launch(Dispatchers.Default) {
+            while (clickCheck != 1) {
+                if (SystemClock.elapsedRealtime() - waitTime == 1000L) {
+                    if (clickCheck == 0) {
+                        appViewModel.getLunchChecked(item, checked)
+                    }
+                    clickCheck = 1
+                }
+            }
+        }
+
+    override fun onBackPressed() {
 
     }
 

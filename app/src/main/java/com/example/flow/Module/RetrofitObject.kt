@@ -14,12 +14,19 @@ import java.io.File
 import java.net.CookieManager
 
 
-class AddCookieInterceptor(val id: String) : Interceptor {
+class AddCookieInterceptor() : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val requestBuilder = chain.request().newBuilder()
+        val response = chain.proceed(chain.request())
 
-        requestBuilder.addHeader("cookie","token=$id")
+        if (chain.request().url.toString() == "https://lunch.playio.kr/api/login") {
+            App.prefs.token = response.headers("set-cookie")[0]
+        }
+
+        requestBuilder.addHeader("cookie","${App.prefs.token}")
+
+        response.close()
 
         return chain.proceed(requestBuilder.build())
     }
@@ -28,9 +35,9 @@ class AddCookieInterceptor(val id: String) : Interceptor {
 
 class RetrofitObject(private var context: Context) {
 
-    private fun getRetrofit(id: String): Retrofit{
+    private fun getRetrofit(): Retrofit{
 
-        val interceptor = AddCookieInterceptor(id)
+        val interceptor = AddCookieInterceptor()
 
         val interceptorBody = HttpLoggingInterceptor()
         interceptorBody.setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -52,8 +59,8 @@ class RetrofitObject(private var context: Context) {
             .build()
     }
 
-    fun getRetrofitService(id: String): Api {
-        return getRetrofit(id).create(Api::class.java)
+    fun getRetrofitService(): Api {
+        return getRetrofit().create(Api::class.java)
     }
 
 }

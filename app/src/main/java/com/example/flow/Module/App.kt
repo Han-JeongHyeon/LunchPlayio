@@ -6,7 +6,12 @@ import org.koin.core.context.startKoin
 
 class App: Application() {
 
+    companion object {
+        lateinit var prefs : MySharedPreferences
+    }
+
     override fun onCreate() {
+        prefs = MySharedPreferences(applicationContext)
         super.onCreate()
 
         startKoin {
