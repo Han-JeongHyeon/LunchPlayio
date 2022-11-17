@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.flow.Data.LoginData
+import com.example.flow.Module.App
 import com.example.flow.databinding.ActivityLoginBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -31,6 +32,9 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.idEd.setText(App.prefs.loginId)
+        binding.passwordEd.setText(App.prefs.loginPw)
+
         binding.loginBtn.setOnClickListener {
             if (binding.idEd.text.isEmpty() || binding.passwordEd.text.isEmpty()) {
                 return@setOnClickListener
@@ -39,6 +43,9 @@ class LoginActivity : AppCompatActivity() {
                 "${binding.idEd.text}",
                 "${binding.passwordEd.text}"
             )
+
+            App.prefs.loginId = loginInfo.id
+            App.prefs.loginPw = loginInfo.pw
 
             appViewModel.login(loginInfo, baseContext)
         }
