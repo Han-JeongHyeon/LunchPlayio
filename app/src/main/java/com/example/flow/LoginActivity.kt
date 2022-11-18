@@ -44,8 +44,10 @@ class LoginActivity : AppCompatActivity() {
                 "${binding.passwordEd.text}"
             )
 
-            App.prefs.loginId = loginInfo.id
-            App.prefs.loginPw = loginInfo.pw
+            if ("${binding.idEd.text}" != App.prefs.loginId) {
+                App.prefs.loginId = "${binding.idEd.text}"
+                App.prefs.loginPw = "${binding.passwordEd.text}"
+            }
 
             appViewModel.login(loginInfo, baseContext)
         }

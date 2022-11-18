@@ -14,6 +14,7 @@ import com.example.flow.Adapter.Adapter
 import com.example.flow.Data.CheckList
 import com.example.flow.Data.Data
 import com.example.flow.Data.GetTableData
+import com.example.flow.Module.App
 import com.example.flow.Module.RetrofitObject
 import com.example.flow.databinding.ActivityMainBinding
 import kotlinx.coroutines.CoroutineScope
@@ -45,9 +46,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val id = intent.getStringExtra("id")
-        val userName = intent.getStringExtra("userName")
 
-        binding.userName.text = userName
+        binding.userName.text = App.prefs.loginId
 
         dateAdapter = Adapter()
 

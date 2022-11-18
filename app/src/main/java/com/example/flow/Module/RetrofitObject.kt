@@ -21,7 +21,7 @@ class AddCookieInterceptor : Interceptor {
         val requestBuilder = chain.request().newBuilder()
         val response = chain.proceed(chain.request())
 
-        if (chain.request().url.toString() == "https://lunch.playio.kr/api/login") {
+        if (chain.request().url.toString() == "https://lunch.playio.kr/api/login" && response.code == 200) {
             App.prefs.token = response.headers("set-cookie")[0]
         }
 

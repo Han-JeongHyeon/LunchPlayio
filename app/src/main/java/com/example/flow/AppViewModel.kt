@@ -12,6 +12,7 @@ import com.example.flow.Data.CheckList
 import com.example.flow.Data.Data
 import com.example.flow.Data.GetTableData
 import com.example.flow.Data.LoginData
+import com.example.flow.Module.App
 import com.example.flow.Module.RetrofitObject
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.BufferOverflow
@@ -25,7 +26,6 @@ import java.lang.Exception
 
 class AppViewModel(retrofit: RetrofitObject) : ViewModel() {
 
-    //    private var _lunchList = MutableStateFlow(listOf(GetTableData("", "", "", "", "", "", "")))
     private var _lunchList = MutableSharedFlow<List<GetTableData>>(replay = 0, extraBufferCapacity = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
     var lunchList = _lunchList.asSharedFlow()
 
@@ -41,12 +41,12 @@ class AppViewModel(retrofit: RetrofitObject) : ViewModel() {
             try {
                 val id = retrofitService.login(loginInfo).map { it.id }[0]
                 intent.putExtra("id", id)
-                intent.putExtra("userName", loginInfo.id)
                 context.startActivity(intent)
             } catch (e: HttpException) {
                 when (e.code()) {
                     500 -> errorText = "아이디, 비밀번호가 일치하지 않습니다."
-                    521 -> errorText = "서버 오류."
+                    502 -> errorText = "서버 오류 502"
+                    521 -> errorText = "서버 오류 521"
                 }
                 handler.postDelayed({
                     Toast.makeText(context, errorText, Toast.LENGTH_SHORT).show()
